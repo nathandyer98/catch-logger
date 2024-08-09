@@ -1,11 +1,15 @@
 import { Grid } from "@chakra-ui/react";
-import { CATCHES } from "../dummy";
 import CatchLog from "./CatchLog";
+import { Log } from "../hooks/useCatch";
 
-const CatchesGrid = () => {
+interface Props {
+  catchLog: Log[];
+}
+
+const CatchesGrid = ({ catchLog }: Props) => {
   return (
-    <Grid templateColumns="1fr">
-      {CATCHES.map((log) => (
+    <Grid templateColumns="1fr" gap={1}>
+      {catchLog.map((log) => (
         <CatchLog key={log.id} log={log} />
       ))}
     </Grid>

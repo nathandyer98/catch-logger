@@ -6,40 +6,32 @@ import {
   IconButton,
   Text,
 } from "@chakra-ui/react";
-import { FishSpecies } from "../enum/FishSpecies";
 import { BiTrash } from "react-icons/bi";
 import EditModal from "./EditCatchModal";
-
-export interface Log {
-  name: string;
-  species: FishSpecies;
-  weight: number;
-  url: string;
-}
+import { Log } from "../hooks/useCatch";
 
 interface Props {
-  key: number;
   log: Log;
 }
 
-const CatchLog = ({ key, log }: Props) => {
+const CatchLog = ({ log }: Props) => {
   return (
-    <Card key={key} size="sm" my="3px">
+    <Card size="sm" my="3px">
       <CardHeader>
-        <Flex justifyContent="space-between">
-          <Flex minW="90%" justifyContent="space-between" paddingRight={10}>
-            <Avatar src={log.url} size="sm" />
-            <Text>Angler: {log.name} </Text>
-            <Text>Species: {log.species} </Text>
-            <Text>Weight: {log.weight} </Text>
+        <Flex justifyContent="space-between" alignItems="center">
+          <Flex alignItems="center" gap={4} flex="1">
+            <Avatar src={log.imgUrl} size="sm" />
+            <Text fontWeight="bold">Angler: {log.name}</Text>
+            <Text>Species: {log.species}</Text>
+            <Text>Weight: {log.weight} lbs</Text>
           </Flex>
-          <Flex minW="5%" justifyContent="space-between">
-            <EditModal />
+          <Flex alignItems="center" gap={2}>
+            <EditModal aria-label="Edit catch details" />
             <IconButton
               variant="ghost"
               colorScheme="red"
-              size={"sm"}
-              aria-label="See menu"
+              size="sm"
+              aria-label="Delete catch"
               icon={<BiTrash size={20} />}
             />
           </Flex>
