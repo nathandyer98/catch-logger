@@ -30,7 +30,7 @@ const AddCatchModal = ({ setCatchLog }: Props) => {
   const [newCatch, setNewCatch] = useState<CreateCatchLog>({
     name: "",
     species: "" as FishSpecies,
-    weight: Number(""),
+    weight: Number(),
   });
 
   const { createCatch, error } = useCreateCatch();
@@ -66,7 +66,7 @@ const AddCatchModal = ({ setCatchLog }: Props) => {
       });
     } finally {
       setIsLoading(false);
-      setNewCatch({ name: "", species: "" as FishSpecies, weight: 0 });
+      setNewCatch({ name: "", species: "" as FishSpecies, weight: Number() });
     }
   };
 
@@ -83,7 +83,7 @@ const AddCatchModal = ({ setCatchLog }: Props) => {
           <ModalCloseButton />
           <ModalBody>
             <ModalBody pb={6}>
-              <FormControl>
+              <FormControl mt={4}>
                 <FormLabel>Full Name</FormLabel>
                 <Input
                   placeholder="John Doe"
@@ -93,7 +93,7 @@ const AddCatchModal = ({ setCatchLog }: Props) => {
                   }
                 />
               </FormControl>
-              <FormControl>
+              <FormControl mt={4}>
                 <FormLabel>Species</FormLabel>
                 <Select
                   placeholder="Select Species"
@@ -112,14 +112,13 @@ const AddCatchModal = ({ setCatchLog }: Props) => {
                   ))}
                 </Select>
               </FormControl>
-
               <FormControl mt={4}>
                 <FormLabel>Weight ( lb )</FormLabel>
                 <Input
                   type="number"
                   resize={"none"}
                   overflowY={"hidden"}
-                  placeholder="123"
+                  placeholder="45"
                   value={newCatch.weight}
                   onChange={(e) =>
                     setNewCatch({

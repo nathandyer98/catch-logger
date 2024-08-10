@@ -82,7 +82,7 @@ const EditCatchModal = ({ log, setCatchLog }: Props) => {
           <ModalCloseButton />
           <ModalBody>
             <ModalBody pb={6}>
-              <FormControl>
+              <FormControl mt={4}>
                 <FormLabel>Full Name</FormLabel>
                 <Input
                   placeholder="John Doe"
@@ -92,7 +92,7 @@ const EditCatchModal = ({ log, setCatchLog }: Props) => {
                   }
                 />
               </FormControl>
-              <FormControl>
+              <FormControl mt={4}>
                 <FormLabel>Species</FormLabel>
                 <Select
                   onChange={(e) =>
