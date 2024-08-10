@@ -1,9 +1,9 @@
 import { Grid } from "@chakra-ui/react";
 import CatchLog from "./CatchLog";
-import { Log } from "../hooks/useCatch";
+import { FetchCatchLogs } from "../hooks/useFetchCatch";
 
 interface Props {
-  catchLog: Log[];
+  catchLog: FetchCatchLogs[];
 }
 
 const CatchesGrid = ({ catchLog }: Props) => {

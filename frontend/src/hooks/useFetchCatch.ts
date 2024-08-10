@@ -3,7 +3,7 @@ import apiClient from "../services/api-client";
 import { FishSpecies } from "../enum/FishSpecies";
 import { CanceledError } from "axios";
 
-export interface Log {
+export interface FetchCatchLogs{
     id: number;
     name: string;
     species: FishSpecies;
@@ -11,14 +11,14 @@ export interface Log {
     imgUrl: string; 
 }
 
-const useCatch = () => {
-    const [catchLog, setCatchLog] = useState<Log[]>([]); 
+const useFetchCatch = () => {
+    const [catchLog, setCatchLog] = useState<FetchCatchLogs[]>([]); 
     const [error, setError] = useState("");
 
     useEffect(() => {
         const controller = new AbortController(); 
 
-        apiClient.get<Log[]>('/catches', { signal: controller.signal })
+        apiClient.get<FetchCatchLogs[]>('/catches', { signal: controller.signal })
             .then(res => setCatchLog(res.data))
             .catch(err => {
                 if (err instanceof CanceledError) {
@@ -31,7 +31,7 @@ const useCatch = () => {
         
     }, []);
 
-    return { catchLog, error };
+    return { catchLog, setCatchLog, error };
 }
 
-export default useCatch;
+export default useFetchCatch;

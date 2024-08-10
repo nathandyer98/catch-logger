@@ -6,5 +6,4 @@ export enum FishSpecies {
     Pike = "Pike",
     Perch = "Perch",
     Roach = "Roach",
-    Rudd = "Rudd",
   }

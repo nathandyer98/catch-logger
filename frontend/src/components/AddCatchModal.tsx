@@ -12,20 +12,64 @@ import {
   ModalOverlay,
   Select,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { BiAddToQueue } from "react-icons/bi";
 import { FishSpecies } from "../enum/FishSpecies";
+import { FetchCatchLogs } from "../hooks/useFetchCatch";
+import useCreateCatch, { CreateCatchLog } from "../hooks/useCreateCatch";
 
-const AddCatchModal = () => {
+interface Props {
+  setCatchLog: React.Dispatch<React.SetStateAction<FetchCatchLogs[]>>;
+}
+
+const AddCatchModal = ({ setCatchLog }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLoading, setIsLoading] = useState(false);
-  const [inputs, setInputs] = useState({
+  const [newCatch, setNewCatch] = useState<CreateCatchLog>({
     name: "",
-    species: "",
+    species: "" as FishSpecies,
     weight: 0,
-    gender: "",
   });
+
+  const { createCatch, error } = useCreateCatch();
+  const toast = useToast();
+
+  const handleSubmit = async () => {
+    setIsLoading(true);
+    try {
+      const data = await createCatch(newCatch);
+      if (
+        newCatch.name != "" &&
+        newCatch.species != ("" as FishSpecies) &&
+        newCatch.weight != 0
+      ) {
+        setCatchLog((prevState) => [...prevState, data as FetchCatchLogs]);
+        toast({
+          status: "success",
+          title: "Congrats! 🎉",
+          description: "A new catch has been added!",
+          duration: 2000,
+          position: "top-left",
+        });
+      } else {
+        throw new Error(error);
+      }
+      onClose();
+    } catch (e) {
+      console.error("Error adding catch:", e);
+      toast({
+        status: "error",
+        title: "An error occurred.",
+        description: String(e),
+        duration: 4000,
+      });
+    } finally {
+      setIsLoading(false);
+      setNewCatch({ name: "", species: "" as FishSpecies, weight: 0 });
+    }
+  };
 
   return (
     <>
@@ -44,22 +88,26 @@ const AddCatchModal = () => {
                 <FormLabel>Full Name</FormLabel>
                 <Input
                   placeholder="John Doe"
-                  value={inputs.name}
+                  value={newCatch.name}
                   onChange={(e) =>
-                    setInputs({ ...inputs, name: e.target.value })
+                    setNewCatch({ ...newCatch, name: e.target.value })
                   }
                 />
               </FormControl>
               <FormControl>
                 <FormLabel>Species</FormLabel>
-                <Select placeholder="Select Species">
-                  {(
-                    Object.keys(FishSpecies) as Array<keyof typeof FishSpecies>
-                  ).map((key) => (
-                    <option
-                      onSelect={() => setInputs({ ...inputs, species: key })}
-                      value={key}
-                    >
+                <Select
+                  placeholder="Select Species"
+                  onChange={(e) =>
+                    setNewCatch({
+                      ...newCatch,
+                      species: e.target.value as FishSpecies,
+                    })
+                  }
+                  value={newCatch.species}
+                >
+                  {Object.values(FishSpecies).map((key, index) => (
+                    <option value={key} key={`${key}-${index}`}>
                       {key}
                     </option>
                   ))}
@@ -72,9 +120,12 @@ const AddCatchModal = () => {
                   resize={"none"}
                   overflowY={"hidden"}
                   placeholder="123"
-                  value={inputs.weight}
+                  value={newCatch.weight}
                   onChange={(e) =>
-                    setInputs({ ...inputs, weight: parseInt(e.target.value) })
+                    setNewCatch({
+                      ...newCatch,
+                      weight: parseInt(e.target.value),
+                    })
                   }
                 />
               </FormControl>
@@ -86,10 +137,22 @@ const AddCatchModal = () => {
               mr={3}
               type="submit"
               isLoading={isLoading}
+              onClick={handleSubmit}
             >
               Add
             </Button>
-            <Button onClick={onClose}>Cancel</Button>
+            <Button
+              onClick={() => {
+                onClose();
+                setNewCatch({
+                  name: "",
+                  species: "" as FishSpecies,
+                  weight: 0,
+                });
+              }}
+            >
+              Cancel
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

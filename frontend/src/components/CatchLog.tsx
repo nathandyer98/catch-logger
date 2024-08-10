@@ -8,12 +8,11 @@ import {
 } from "@chakra-ui/react";
 import { BiTrash } from "react-icons/bi";
 import EditModal from "./EditCatchModal";
-import { Log } from "../hooks/useCatch";
+import { FetchCatchLogs } from "../hooks/useFetchCatch";
 
 interface Props {
-  log: Log;
+  log: FetchCatchLogs;
 }
-
 const CatchLog = ({ log }: Props) => {
   return (
     <Card size="sm" my="3px">

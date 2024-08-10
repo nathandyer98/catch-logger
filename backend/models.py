@@ -24,7 +24,7 @@ class Catch(db.Model):
         return {
             "id": self.id,
             "name": self.name,
-            "species": self.species.value,  # Access the enum value for JSON serialization
+            "species": self.species.value,  
             "weight": self.weight,
             "imgUrl": self.img_url,
         }

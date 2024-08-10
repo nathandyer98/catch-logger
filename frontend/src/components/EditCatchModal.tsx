@@ -17,7 +17,7 @@ import { useState } from "react";
 import { BiEditAlt } from "react-icons/bi";
 import { FishSpecies } from "../enum/FishSpecies";
 
-const AddCatchModal = () => {
+const EditCatchModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLoading, setIsLoading] = useState(false);
   const [inputs, setInputs] = useState({
@@ -53,13 +53,8 @@ const AddCatchModal = () => {
               <FormControl>
                 <FormLabel>Species</FormLabel>
                 <Select placeholder="Select Species">
-                  {(
-                    Object.keys(FishSpecies) as Array<keyof typeof FishSpecies>
-                  ).map((key) => (
-                    <option
-                      onSelect={() => setInputs({ ...inputs, species: key })}
-                      value={key}
-                    >
+                  {Object.values(FishSpecies).map((key, index) => (
+                    <option value={key} key={`${key}-${index}`}>
                       {key}
                     </option>
                   ))}
@@ -97,4 +92,4 @@ const AddCatchModal = () => {
   );
 };
 
-export default AddCatchModal;
+export default EditCatchModal;
