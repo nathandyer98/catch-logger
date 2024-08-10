@@ -25,7 +25,7 @@ def create_catch():
     name = data.get("name")
     species = data.get("species")
     weight = data.get("weight") 
-    img_url = "https://avatar.iran.liara.run/public/boy?carpy"
+    img_url = f"https://avatar.iran.liara.run/public/boy?username={name}"
 
     if species not in [species.value for species in FishSpecies]:
       return jsonify({"error": f'Invalid species: {species}. Must be one of {[s.value for s in FishSpecies]}'}), 400

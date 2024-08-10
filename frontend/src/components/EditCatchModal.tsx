@@ -78,7 +78,7 @@ const EditCatchModal = ({ log, setCatchLog }: Props) => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader> Add a new Catch </ModalHeader>
+          <ModalHeader> Edit Catch : {log.id}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <ModalBody pb={6}>
@@ -112,7 +112,7 @@ const EditCatchModal = ({ log, setCatchLog }: Props) => {
               </FormControl>
 
               <FormControl mt={4}>
-                <FormLabel>Weight</FormLabel>
+                <FormLabel>Weight (lb)</FormLabel>
                 <Input
                   resize={"none"}
                   overflowY={"hidden"}

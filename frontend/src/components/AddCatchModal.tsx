@@ -30,7 +30,7 @@ const AddCatchModal = ({ setCatchLog }: Props) => {
   const [newCatch, setNewCatch] = useState<CreateCatchLog>({
     name: "",
     species: "" as FishSpecies,
-    weight: 0,
+    weight: Number(""),
   });
 
   const { createCatch, error } = useCreateCatch();
@@ -43,7 +43,7 @@ const AddCatchModal = ({ setCatchLog }: Props) => {
       if (
         (error && newCatch.name == "") ||
         newCatch.species == ("" as FishSpecies) ||
-        newCatch.weight == 0
+        newCatch.weight == Number("")
       ) {
         throw new Error(error);
       }
@@ -114,8 +114,9 @@ const AddCatchModal = ({ setCatchLog }: Props) => {
               </FormControl>
 
               <FormControl mt={4}>
-                <FormLabel>Weight</FormLabel>
+                <FormLabel>Weight ( lb )</FormLabel>
                 <Input
+                  type="number"
                   resize={"none"}
                   overflowY={"hidden"}
                   placeholder="123"
@@ -146,7 +147,7 @@ const AddCatchModal = ({ setCatchLog }: Props) => {
                 setNewCatch({
                   name: "",
                   species: "" as FishSpecies,
-                  weight: 0,
+                  weight: Number(""),
                 });
               }}
             >

@@ -7,6 +7,8 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///fishlogs.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
+CORS(app)
+
 db = SQLAlchemy(app)
 
 frontend_folder = os.path.join(os.getcwd(),"..","frontend")
