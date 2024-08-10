@@ -17,7 +17,7 @@ function App() {
             {error}
           </Text>
         ) : (
-          <CatchesGrid catchLog={catchLog} />
+          <CatchesGrid setCatchLog={setCatchLog} catchLog={catchLog} />
         )}
         <Box position="absolute" bottom="100px" right="100px">
           <AddCatchModal setCatchLog={setCatchLog} />

@@ -41,27 +41,26 @@ const AddCatchModal = ({ setCatchLog }: Props) => {
     try {
       const data = await createCatch(newCatch);
       if (
-        newCatch.name != "" &&
-        newCatch.species != ("" as FishSpecies) &&
-        newCatch.weight != 0
+        (error && newCatch.name == "") ||
+        newCatch.species == ("" as FishSpecies) ||
+        newCatch.weight == 0
       ) {
-        setCatchLog((prevState) => [...prevState, data as FetchCatchLogs]);
-        toast({
-          status: "success",
-          title: "Congrats! 🎉",
-          description: "A new catch has been added!",
-          duration: 2000,
-          position: "top-left",
-        });
-      } else {
         throw new Error(error);
       }
+      setCatchLog((prevState) => [...prevState, data as FetchCatchLogs]);
+      toast({
+        status: "success",
+        title: "Congrats! 🎉",
+        description: "A new catch has been added!",
+        duration: 2000,
+        position: "top-left",
+      });
       onClose();
     } catch (e) {
       console.error("Error adding catch:", e);
       toast({
         status: "error",
-        title: "An error occurred.",
+        title: "An error occurred. Missing form data",
         description: String(e),
         duration: 4000,
       });

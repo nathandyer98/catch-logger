@@ -4,15 +4,22 @@ import { FetchCatchLogs } from "./useFetchCatch";
 import { AxiosError, CanceledError } from "axios";
 import { useState } from "react";
 
-const useDeleteCatch = () => {
+export interface UpdateCatchLog {
+  name?: string;
+  species?: FishSpecies;
+  weight?: number;
+}
+
+const useUpdateCatch = () => {
   const [error, setError] = useState("");
 
-  const deleteCatch = async (catchId: number) => {
+  const updateCatch = async (catchId: number, updateCatch: UpdateCatchLog) => {
     const controller = new AbortController();
 
     try {
-      const response = await apiClient.delete<string>(
+      const response = await apiClient.patch<FetchCatchLogs>(
         `/catches/${catchId}`,
+        updateCatch,
         { signal: controller.signal }
       );
       return response.data;
@@ -20,6 +27,7 @@ const useDeleteCatch = () => {
       if (err instanceof CanceledError) {
         return;
       }
+
       if (err instanceof AxiosError) {
         setError(err.response?.data?.message || err.message);
       } else if (err instanceof Error) {
@@ -32,7 +40,7 @@ const useDeleteCatch = () => {
     return () => controller.abort();
   };
 
-  return { deleteCatch, error };
+  return { updateCatch, error };
 };
 
-export default useDeleteCatch;
+export default useUpdateCatch;
