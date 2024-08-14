@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Badge,
   Card,
   CardHeader,
   Flex,
@@ -12,6 +13,7 @@ import EditModal from "./EditCatchModal";
 import { FetchCatchLogs } from "../hooks/useFetchCatch";
 import useDeleteCatch from "../hooks/useDeleteCatch";
 import { useState } from "react";
+import { getWeightColor } from "../utility/getWeightColor";
 
 interface Props {
   log: FetchCatchLogs;
@@ -53,32 +55,55 @@ const CatchLog = ({ log, setCatchLog }: Props) => {
   };
 
   return (
-    <Card key={log.id} size="sm" my="3px">
+    <Card
+      key={log.id}
+      size="sm"
+      my="3px"
+      transition="all 0.2s"
+      _hover={{ boxShadow: "md", transform: "translateY(-2px)" }}
+    >
       <CardHeader>
-        <Flex justifyContent="space-between" alignItems="center">
-          <Flex alignItems="center" gap={4} flex="1">
-            <Avatar src={log.imgUrl} size="sm" />
-            <Text fontWeight="bold">Angler: {log.name}</Text>
-            <Text>Species: {log.species}</Text>
-            <Text>Weight: {log.weight} lbs</Text>
-          </Flex>
-          <Flex alignItems="center" gap={2}>
-            <EditModal
-              aria-label="Edit catch details"
-              setCatchLog={setCatchLog}
-              log={log}
-            />
-            <IconButton
-              isLoading={isLoading}
-              variant="ghost"
-              colorScheme="red"
-              size="sm"
-              aria-label="Delete catch"
-              icon={<BiTrash size={20} />}
-              onClick={() => {
-                handleDelete(log.id);
-              }}
-            />
+        <Flex flexDirection="column" justifyContent="space-between">
+          <Flex justifyContent="space-between" alignItems="center" mb={2}>
+            <Flex alignItems="center" gap={4} flex="1">
+              <Flex w="3%">
+                <Avatar src={log.imgUrl} size="sm" />
+              </Flex>
+              <Flex w="15%">
+                <Text fontWeight="bold">Angler: {log.name}</Text>
+              </Flex>
+              <Flex w="15%">
+                <Text>Species: {log.species}</Text>
+              </Flex>
+              <Flex w="15%">
+                <Badge colorScheme={getWeightColor(log.weight)}>
+                  {log.weight} lbs
+                </Badge>
+              </Flex>
+            </Flex>
+            <Flex pr="20px">
+              <Text fontSize="sm" color="gray.500">
+                Date Caught: {new Date(log.dateCaught).toLocaleString()}
+              </Text>
+            </Flex>
+            <Flex alignItems="center" gap={2}>
+              <EditModal
+                aria-label="Edit catch details"
+                setCatchLog={setCatchLog}
+                log={log}
+              />
+              <IconButton
+                isLoading={isLoading}
+                variant="ghost"
+                colorScheme="red"
+                size="sm"
+                aria-label="Delete catch"
+                icon={<BiTrash size={20} />}
+                onClick={() => {
+                  handleDelete(log.id);
+                }}
+              />
+            </Flex>
           </Flex>
         </Flex>
       </CardHeader>
