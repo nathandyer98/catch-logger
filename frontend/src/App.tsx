@@ -9,9 +9,9 @@ import {
 // import Navbar from "./components/Navbar";
 import CatchesGrid from "./components/CatchesGrid";
 import AddCatchModal from "./components/AddCatchModal";
-import useFetchCatch from "./hooks/useFetchCatch";
 import Header from "./components/Header";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import useFetchCatch from "./hooks/useFetchCatch";
 
 function App() {
   const { catchLog, error, setCatchLog } = useFetchCatch();

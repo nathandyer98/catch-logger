@@ -24,14 +24,17 @@ interface Props {
   setCatchLog: React.Dispatch<React.SetStateAction<FetchCatchLogs[]>>;
 }
 
+const DefaultCatch = {
+  name: "",
+  species: "" as FishSpecies,
+  weight: Number(),
+  date_caught: new Date().toISOString().slice(0, 16),
+};
+
 const AddCatchModal = ({ setCatchLog }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLoading, setIsLoading] = useState(false);
-  const [newCatch, setNewCatch] = useState<CreateCatchLog>({
-    name: "",
-    species: "" as FishSpecies,
-    weight: Number(),
-  });
+  const [newCatch, setNewCatch] = useState<CreateCatchLog>(DefaultCatch);
 
   const { createCatch, error } = useCreateCatch();
   const toast = useToast();
@@ -41,7 +44,8 @@ const AddCatchModal = ({ setCatchLog }: Props) => {
     try {
       const data = await createCatch(newCatch);
       if (
-        (error && newCatch.name == "") ||
+        error ||
+        newCatch.name == "" ||
         newCatch.species == ("" as FishSpecies) ||
         newCatch.weight == Number("")
       ) {
@@ -66,7 +70,7 @@ const AddCatchModal = ({ setCatchLog }: Props) => {
       });
     } finally {
       setIsLoading(false);
-      setNewCatch({ name: "", species: "" as FishSpecies, weight: Number() });
+      setNewCatch(DefaultCatch);
     }
   };
 
@@ -128,6 +132,25 @@ const AddCatchModal = ({ setCatchLog }: Props) => {
                   }
                 />
               </FormControl>
+              <FormControl mt={4}>
+                <FormLabel>Date / Time of Catch</FormLabel>
+                <Input
+                  placeholder="Select Date and Time"
+                  size="md"
+                  type="datetime-local"
+                  value={newCatch.date_caught}
+                  onChange={(e) => {
+                    if (e.target.value) {
+                      setNewCatch({
+                        ...newCatch,
+                        date_caught: new Date(e.target.value)
+                          .toISOString()
+                          .slice(0, 16),
+                      });
+                    }
+                  }}
+                />
+              </FormControl>
             </ModalBody>
           </ModalBody>
           <ModalFooter>
@@ -143,11 +166,7 @@ const AddCatchModal = ({ setCatchLog }: Props) => {
             <Button
               onClick={() => {
                 onClose();
-                setNewCatch({
-                  name: "",
-                  species: "" as FishSpecies,
-                  weight: Number(""),
-                });
+                setNewCatch(DefaultCatch);
               }}
             >
               Cancel

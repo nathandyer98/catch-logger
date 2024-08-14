@@ -2,6 +2,7 @@ from app import db
 import enum
 from sqlalchemy import Enum
 
+
 class FishSpecies(enum.Enum):
     Carp = "Carp"
     Bream = "Bream"
@@ -19,13 +20,14 @@ class Catch(db.Model):
     species = db.Column(Enum(FishSpecies), nullable=False)
     weight = db.Column(db.Integer, nullable=False)
     img_url = db.Column(db.String(200), nullable=True)
+    date_caught = db.Column(db.String(16), nullable=False)
 
     def to_json(self):
         return {
             "id": self.id,
             "name": self.name,
-            "species": self.species.value,  
+            "species": self.species.value,
             "weight": self.weight,
             "imgUrl": self.img_url,
+            "dateCaught": self.date_caught,
         }
-
