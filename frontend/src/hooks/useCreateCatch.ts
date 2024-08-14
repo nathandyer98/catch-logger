@@ -8,7 +8,7 @@ export interface CreateCatchLog {
   name: string;
   species: FishSpecies;
   weight: number;
-  date_caught: string;
+  dateCaught: string;
 }
 
 const useCreateCatch = () => {

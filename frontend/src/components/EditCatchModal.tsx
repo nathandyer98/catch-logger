@@ -33,6 +33,7 @@ const EditCatchModal = ({ log, setCatchLog }: Props) => {
     name: log.name,
     species: log.species as FishSpecies,
     weight: log.weight,
+    dateCaught: log.dateCaught,
   });
 
   const { updateCatch, error } = useUpdateCatch();
@@ -115,7 +116,6 @@ const EditCatchModal = ({ log, setCatchLog }: Props) => {
                   ))}
                 </Select>
               </FormControl>
-
               <FormControl mt={4}>
                 <FormLabel>Weight (lb)</FormLabel>
                 <Input
@@ -126,6 +126,25 @@ const EditCatchModal = ({ log, setCatchLog }: Props) => {
                   onChange={(e) =>
                     setInputs({ ...inputs, weight: parseInt(e.target.value) })
                   }
+                />
+              </FormControl>
+              <FormControl mt={4}>
+                <FormLabel>Date / Time of Catch</FormLabel>
+                <Input
+                  placeholder="Select Date and Time"
+                  size="md"
+                  type="datetime-local"
+                  value={inputs.dateCaught}
+                  onChange={(e) => {
+                    if (e.target.value) {
+                      setInputs({
+                        ...inputs,
+                        dateCaught: new Date(e.target.value)
+                          .toISOString()
+                          .slice(0, 16),
+                      });
+                    }
+                  }}
                 />
               </FormControl>
             </ModalBody>

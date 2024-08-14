@@ -9,7 +9,7 @@ export interface FetchCatchLogs {
   species: FishSpecies;
   weight: number;
   imgUrl: string;
-  date_caught: string;
+  dateCaught: string;
 }
 
 const useFetchCatch = () => {

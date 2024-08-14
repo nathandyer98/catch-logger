@@ -28,7 +28,7 @@ const DefaultCatch = {
   name: "",
   species: "" as FishSpecies,
   weight: Number(),
-  date_caught: new Date().toISOString().slice(0, 16),
+  dateCaught: new Date().toISOString().slice(0, 16),
 };
 
 const AddCatchModal = ({ setCatchLog }: Props) => {
@@ -138,12 +138,12 @@ const AddCatchModal = ({ setCatchLog }: Props) => {
                   placeholder="Select Date and Time"
                   size="md"
                   type="datetime-local"
-                  value={newCatch.date_caught}
+                  value={newCatch.dateCaught}
                   onChange={(e) => {
                     if (e.target.value) {
                       setNewCatch({
                         ...newCatch,
-                        date_caught: new Date(e.target.value)
+                        dateCaught: new Date(e.target.value)
                           .toISOString()
                           .slice(0, 16),
                       });
