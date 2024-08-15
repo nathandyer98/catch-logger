@@ -1,4 +1,4 @@
-import { Text, Button, useColorMode, Flex, Box } from "@chakra-ui/react";
+import { Text, Button, useColorMode, Flex } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { FaFish } from "react-icons/fa";
 import SortSelector from "./SortSelector";
@@ -49,8 +49,10 @@ const Header = ({ sortBy, onSelectSortOrder }: Props) => {
           </Text>
         </Text>
       </Flex>
-      <SortSelector sortBy={sortBy} onSelectSortOrder={onSelectSortOrder} />
-      <Box>
+      <Flex>
+        <Flex mr={3}>
+          <SortSelector sortBy={sortBy} onSelectSortOrder={onSelectSortOrder} />
+        </Flex>
         <Button
           onClick={toggleColorMode}
           bg={colorMode === "light" ? "blue.100" : "blue.700"}
@@ -61,7 +63,7 @@ const Header = ({ sortBy, onSelectSortOrder }: Props) => {
         >
           {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
         </Button>
-      </Box>
+      </Flex>
     </Flex>
   );
 };
