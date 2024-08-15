@@ -18,9 +18,10 @@ import { getWeightColor } from "../utility/getWeightColor";
 interface Props {
   log: FetchCatchLogs;
   setCatchLog: React.Dispatch<React.SetStateAction<FetchCatchLogs[]>>;
+  refetch: () => void;
 }
 
-const CatchLog = ({ log, setCatchLog }: Props) => {
+const CatchLog = ({ log, setCatchLog, refetch }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { deleteCatch, error } = useDeleteCatch();
@@ -34,6 +35,7 @@ const CatchLog = ({ log, setCatchLog }: Props) => {
         throw new Error(error);
       }
       setCatchLog((prevState) => prevState.filter((c) => c.id !== log.id));
+      refetch();
       toast({
         status: "success",
         title: "Success",
@@ -76,7 +78,7 @@ const CatchLog = ({ log, setCatchLog }: Props) => {
               <Flex w="15%">
                 <Text fontWeight="bold">Angler: {log.name}</Text>
               </Flex>
-              <Flex w="15%">
+              <Flex w="10%">
                 <Text>Species: {log.species}</Text>
               </Flex>
               <Flex w="15%">

@@ -23,12 +23,13 @@ const CatchesGrid = (/*{ catchQuery }: Props*/) => {
               setCatchLog={setCatchLog}
               key={catchLog.id}
               log={catchLog}
+              refetch={refetch}
             />
           ))}
         </Grid>
       )}
       <Box position="relative" right="-40%" mt={5}>
-        <AddCatchModal refetch={refetch} />
+        <AddCatchModal setCatchLog={setCatchLog} refetch={refetch} />
       </Box>
     </>
   );
