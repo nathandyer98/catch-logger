@@ -8,7 +8,13 @@ from models import Catch, FishSpecies
 def get_catches():
     # Get sorting parameters from the query string
     sort_by = request.args.get("sortBy", "date")  # Default to sorting by 'date'
-    order = request.args.get("order", "asc")  # Default to ascending order
+
+    # Determine if the sort order should be descending based '-'
+    if sort_by.startswith("-"):
+        sort_by = sort_by[1:]  # Remove the '-'
+        order = "desc"
+    else:
+        order = "asc"
 
     # Mapping of the sorting fields based on the model
     sort_options = {
@@ -21,13 +27,17 @@ def get_catches():
     # Initialise the sorting column based on the `sortBy` parameter
     sort_column = sort_options.get(sort_by)
 
+    # Error handling for sort field
+    if sort_column is None:
+        return jsonify({"error": "Invalid sort field"}), 400
+
     # Apply ascending or descending order based on the `order` parameter
     if order == "desc":
         sort_column = sort_column.desc()
     else:
         sort_column = sort_column.asc()
 
-    # Query All in database and applying an order by the 'sort_column'
+    # Query All in database and apply an order by the 'sort_column'
     catches = Catch.query.order_by(sort_column).all()
 
     # Return the results as JSON

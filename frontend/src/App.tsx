@@ -4,7 +4,7 @@ import Header from "./components/Header";
 import { useState } from "react";
 
 export interface CatchQuery {
-  sortBy?: string;
+  sortBy: string;
   searchText?: string;
 }
 
@@ -14,7 +14,12 @@ function App() {
   return (
     <Stack minH={"100vh"}>
       <Container maxW="1200px" my={4}>
-        <Header />
+        <Header
+          sortBy={catchQuery.sortBy}
+          onSelectSortOrder={(sortBy) =>
+            setCatchQuery({ ...catchQuery, sortBy })
+          }
+        />
         <CatchesGrid catchQuery={catchQuery} />
       </Container>
     </Stack>
