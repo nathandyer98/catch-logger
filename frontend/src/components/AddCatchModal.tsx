@@ -46,7 +46,6 @@ const AddCatchModal = ({ setCatchLog, refetch }: Props) => {
     try {
       const data = await createCatch(newCatch);
       if (
-        error ||
         newCatch.name == "" ||
         newCatch.species == ("" as FishSpecies) ||
         newCatch.weight == Number("")
@@ -64,7 +63,6 @@ const AddCatchModal = ({ setCatchLog, refetch }: Props) => {
       });
       onClose();
     } catch (e) {
-      console.error("Error adding catch:", e);
       toast({
         status: "error",
         title: "An error occurred. Missing form data",

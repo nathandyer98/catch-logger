@@ -44,7 +44,6 @@ const EditCatchModal = ({ log, setCatchLog }: Props) => {
     try {
       const data = await updateCatch(inputs.id, inputs);
       if (
-        error ||
         inputs.name == "" ||
         inputs.species == ("" as FishSpecies) ||
         inputs.weight == Number("")
