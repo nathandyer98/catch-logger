@@ -16,12 +16,12 @@ import { useState } from "react";
 import { getWeightColor } from "../utility/getWeightColor";
 
 interface Props {
-  log: FetchCatchLogs;
+  catchLog: FetchCatchLogs;
   setCatchLog: React.Dispatch<React.SetStateAction<FetchCatchLogs[]>>;
   refetch: () => void;
 }
 
-const CatchLog = ({ log, setCatchLog, refetch }: Props) => {
+const CatchLog = ({ catchLog, setCatchLog, refetch }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const { deleteCatch, error } = useDeleteCatch();
@@ -34,7 +34,7 @@ const CatchLog = ({ log, setCatchLog, refetch }: Props) => {
       if (error) {
         throw new Error(error);
       }
-      setCatchLog((prevState) => prevState.filter((c) => c.id !== log.id));
+      setCatchLog((prevState) => prevState.filter((c) => c.id !== catchLog.id));
       refetch();
       toast({
         status: "success",
@@ -58,7 +58,7 @@ const CatchLog = ({ log, setCatchLog, refetch }: Props) => {
 
   return (
     <Card
-      key={log.id}
+      key={catchLog.id}
       size="sm"
       my="3px"
       transition="all 0.2s"
@@ -73,30 +73,30 @@ const CatchLog = ({ log, setCatchLog, refetch }: Props) => {
           <Flex justifyContent="space-between" alignItems="center" mb={2}>
             <Flex alignItems="center" gap={4} flex="1">
               <Flex w="3%">
-                <Avatar src={log.imgUrl} size="sm" />
+                <Avatar src={catchLog.imgUrl} size="sm" />
               </Flex>
               <Flex w="15%">
-                <Text fontWeight="bold">Angler: {log.name}</Text>
+                <Text fontWeight="bold">Angler: {catchLog.name}</Text>
               </Flex>
               <Flex w="12%">
-                <Text>Species: {log.species}</Text>
+                <Text>Species: {catchLog.species}</Text>
               </Flex>
               <Flex w="15%">
-                <Badge colorScheme={getWeightColor(log.weight)}>
-                  {log.weight} lbs
+                <Badge colorScheme={getWeightColor(catchLog.weight)}>
+                  {catchLog.weight} lbs
                 </Badge>
               </Flex>
             </Flex>
             <Flex pr="20px">
               <Text fontSize="sm" color="gray.500">
-                Date Caught: {new Date(log.dateCaught).toLocaleString()}
+                Date Caught: {new Date(catchLog.dateCaught).toLocaleString()}
               </Text>
             </Flex>
             <Flex alignItems="center" gap={2}>
               <EditModal
                 aria-label="Edit catch details"
                 setCatchLog={setCatchLog}
-                log={log}
+                catchLog={catchLog}
               />
               <IconButton
                 isLoading={isLoading}
@@ -106,7 +106,7 @@ const CatchLog = ({ log, setCatchLog, refetch }: Props) => {
                 aria-label="Delete catch"
                 icon={<BiTrash size={20} />}
                 onClick={() => {
-                  handleDelete(log.id);
+                  handleDelete(catchLog.id);
                 }}
               />
             </Flex>

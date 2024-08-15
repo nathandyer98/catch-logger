@@ -21,19 +21,19 @@ import { FetchCatchLogs } from "../hooks/useFetchCatch";
 import useUpdateCatch from "../hooks/useUpdateCatch";
 
 interface Props {
-  log: FetchCatchLogs;
+  catchLog: FetchCatchLogs;
   setCatchLog: React.Dispatch<React.SetStateAction<FetchCatchLogs[]>>;
 }
 
-const EditCatchModal = ({ log, setCatchLog }: Props) => {
+const EditCatchModal = ({ catchLog, setCatchLog }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLoading, setIsLoading] = useState(false);
   const [inputs, setInputs] = useState({
-    id: log.id,
-    name: log.name,
-    species: log.species as FishSpecies,
-    weight: log.weight,
-    dateCaught: log.dateCaught,
+    id: catchLog.id,
+    name: catchLog.name,
+    species: catchLog.species as FishSpecies,
+    weight: catchLog.weight,
+    dateCaught: catchLog.dateCaught,
   });
 
   const { updateCatch, error } = useUpdateCatch();
@@ -51,12 +51,14 @@ const EditCatchModal = ({ log, setCatchLog }: Props) => {
         throw new Error(error);
       }
       setCatchLog((prevState) =>
-        prevState.map((l) => (l.id === log.id ? (data as FetchCatchLogs) : l))
+        prevState.map((l) =>
+          l.id === catchLog.id ? (data as FetchCatchLogs) : l
+        )
       );
       toast({
         status: "success",
         title: "Catch Updated! 🎉",
-        description: `${log.name}'s has been updated successfully!`,
+        description: `${catchLog.name}'s has been updated successfully!`,
         duration: 2000,
         position: "top-left",
       });
@@ -83,7 +85,7 @@ const EditCatchModal = ({ log, setCatchLog }: Props) => {
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader> Edit Catch : {log.id}</ModalHeader>
+          <ModalHeader> Edit Catch : {catchLog.id}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <ModalBody pb={6}>
