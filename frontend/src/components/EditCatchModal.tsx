@@ -57,7 +57,7 @@ const EditCatchModal = ({ log, setCatchLog }: Props) => {
       toast({
         status: "success",
         title: "Catch Updated! 🎉",
-        description: `Catch ${log.id} has been updated successfully!`,
+        description: `${log.name}'s has been updated successfully!`,
         duration: 2000,
         position: "top-left",
       });

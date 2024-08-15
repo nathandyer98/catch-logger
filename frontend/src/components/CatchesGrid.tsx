@@ -1,19 +1,36 @@
-import { Grid } from "@chakra-ui/react";
+import { Box, Grid, Text } from "@chakra-ui/react";
 import CatchLog from "./CatchLog";
-import { FetchCatchLogs } from "../hooks/useFetchCatch";
+import useFetchCatch, { FetchCatchLogs } from "../hooks/useFetchCatch";
+import { catchQuery } from "../App";
+import AddCatchModal from "./AddCatchModal";
 
 interface Props {
-  catchLog: FetchCatchLogs[];
-  setCatchLog: React.Dispatch<React.SetStateAction<FetchCatchLogs[]>>;
+  catchQuery: catchQuery;
 }
 
-const CatchesGrid = ({ catchLog, setCatchLog }: Props) => {
+const CatchesGrid = ({ catchQuery }: Props) => {
+  const { catchLog, error, setCatchLog } = useFetchCatch();
   return (
-    <Grid templateColumns="1fr" gap={1}>
-      {catchLog.map((log) => (
-        <CatchLog setCatchLog={setCatchLog} key={log.id} log={log} />
-      ))}
-    </Grid>
+    <>
+      {error ? (
+        <Text color="red.500" textAlign="center">
+          {error}
+        </Text>
+      ) : (
+        <Grid templateColumns="1fr" gap={1}>
+          {catchLog.map((catchLog: FetchCatchLogs) => (
+            <CatchLog
+              setCatchLog={setCatchLog}
+              key={catchLog.id}
+              log={catchLog}
+            />
+          ))}
+        </Grid>
+      )}
+      <Box position="relative" right="-40%" mt={5}>
+        <AddCatchModal setCatchLog={setCatchLog} />
+      </Box>
+    </>
   );
 };
 

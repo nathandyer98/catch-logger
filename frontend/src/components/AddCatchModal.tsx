@@ -2,6 +2,7 @@ import {
   Button,
   FormControl,
   FormLabel,
+  Icon,
   Input,
   Modal,
   ModalBody,
@@ -15,10 +16,10 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { BiAddToQueue } from "react-icons/bi";
 import { FishSpecies } from "../enum/FishSpecies";
 import { FetchCatchLogs } from "../hooks/useFetchCatch";
 import useCreateCatch, { CreateCatchLog } from "../hooks/useCreateCatch";
+import { FaFishFins } from "react-icons/fa6";
 
 interface Props {
   setCatchLog: React.Dispatch<React.SetStateAction<FetchCatchLogs[]>>;
@@ -28,7 +29,7 @@ const DefaultCatch = {
   name: "",
   species: "" as FishSpecies,
   weight: Number(),
-  dateCaught: new Date().toISOString().slice(0, 16),
+  date_caught: new Date().toISOString().slice(0, 16),
 };
 
 const AddCatchModal = ({ setCatchLog }: Props) => {
@@ -76,10 +77,21 @@ const AddCatchModal = ({ setCatchLog }: Props) => {
 
   return (
     <>
-      <Button onClick={onOpen} colorScheme="teal" size="lg">
-        <BiAddToQueue size={40} />
+      <Button
+        onClick={onOpen}
+        colorScheme="blue"
+        size="lg"
+        borderRadius="full"
+        boxShadow="lg"
+        _hover={{
+          transform: "translateY(-2px)",
+          boxShadow: "xl",
+        }}
+        transition="all 0.2s"
+      >
+        <Icon as={FaFishFins} boxSize={6} mr={2} />
+        Add Catch
       </Button>
-
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
@@ -138,12 +150,15 @@ const AddCatchModal = ({ setCatchLog }: Props) => {
                   placeholder="Select Date and Time"
                   size="md"
                   type="datetime-local"
-                  value={newCatch.dateCaught}
+                  value={newCatch.date_caught}
                   onChange={(e) => {
+                    console.log(
+                      new Date(e.target.value).toISOString().slice(0, 16)
+                    );
                     if (e.target.value) {
                       setNewCatch({
                         ...newCatch,
-                        dateCaught: new Date(e.target.value)
+                        date_caught: new Date(e.target.value)
                           .toISOString()
                           .slice(0, 16),
                       });

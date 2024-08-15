@@ -60,7 +60,11 @@ const CatchLog = ({ log, setCatchLog }: Props) => {
       size="sm"
       my="3px"
       transition="all 0.2s"
-      _hover={{ boxShadow: "md", transform: "translateY(-2px)" }}
+      _hover={{
+        boxShadow: "md",
+        transform: "translateY(-2px)",
+        cursor: "pointer",
+      }}
     >
       <CardHeader>
         <Flex flexDirection="column" justifyContent="space-between">
