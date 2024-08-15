@@ -16,13 +16,13 @@ const useFetchCatch = () => {
   const [catchLog, setCatchLog] = useState<FetchCatchLogs[]>([]);
   const [error, setError] = useState("");
 
-  useEffect(() => {
+
+  const fetchCatches = () => {
     const controller = new AbortController();
 
-    apiClient
-      .get<FetchCatchLogs[]>("/catches", { signal: controller.signal })
-      .then((res) => setCatchLog(res.data))
-      .catch((err) => {
+    apiClient.get<FetchCatchLogs[]>('/catches', { signal: controller.signal })
+      .then(res => setCatchLog(res.data))
+      .catch(err => {
         if (err instanceof CanceledError) {
           return;
         }
@@ -30,9 +30,13 @@ const useFetchCatch = () => {
       });
 
     return () => controller.abort();
+  };
+
+  useEffect(() => {
+    fetchCatches()
   }, []);
 
-  return { catchLog, setCatchLog, error };
+  return { catchLog, setCatchLog, error, refetch: fetchCatches };
 };
 
 export default useFetchCatch;

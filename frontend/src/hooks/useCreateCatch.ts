@@ -45,3 +45,4 @@ const useCreateCatch = () => {
 };
 
 export default useCreateCatch;
+

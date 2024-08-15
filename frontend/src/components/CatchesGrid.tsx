@@ -1,15 +1,15 @@
 import { Box, Grid, Text } from "@chakra-ui/react";
 import CatchLog from "./CatchLog";
 import useFetchCatch, { FetchCatchLogs } from "../hooks/useFetchCatch";
-import { catchQuery } from "../App";
+//import { catchQuery } from "../App";
 import AddCatchModal from "./AddCatchModal";
-
+/*
 interface Props {
   catchQuery: catchQuery;
-}
+}*/
 
-const CatchesGrid = ({ catchQuery }: Props) => {
-  const { catchLog, error, setCatchLog } = useFetchCatch();
+const CatchesGrid = (/*{ catchQuery }: Props*/) => {
+  const { catchLog, error, setCatchLog, refetch } = useFetchCatch();
   return (
     <>
       {error ? (
@@ -28,7 +28,7 @@ const CatchesGrid = ({ catchQuery }: Props) => {
         </Grid>
       )}
       <Box position="relative" right="-40%" mt={5}>
-        <AddCatchModal setCatchLog={setCatchLog} />
+        <AddCatchModal refetch={refetch} />
       </Box>
     </>
   );

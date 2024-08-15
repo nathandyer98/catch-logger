@@ -17,12 +17,11 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { FishSpecies } from "../enum/FishSpecies";
-import { FetchCatchLogs } from "../hooks/useFetchCatch";
 import useCreateCatch, { CreateCatchLog } from "../hooks/useCreateCatch";
 import { FaFishFins } from "react-icons/fa6";
 
 interface Props {
-  setCatchLog: React.Dispatch<React.SetStateAction<FetchCatchLogs[]>>;
+  refetch: () => void;
 }
 
 const DefaultCatch = {
@@ -32,7 +31,7 @@ const DefaultCatch = {
   date_caught: new Date().toISOString().slice(0, 16),
 };
 
-const AddCatchModal = ({ setCatchLog }: Props) => {
+const AddCatchModal = ({ refetch }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLoading, setIsLoading] = useState(false);
   const [newCatch, setNewCatch] = useState<CreateCatchLog>(DefaultCatch);
@@ -43,7 +42,7 @@ const AddCatchModal = ({ setCatchLog }: Props) => {
   const handleSubmit = async () => {
     setIsLoading(true);
     try {
-      const data = await createCatch(newCatch);
+      await createCatch(newCatch);
       if (
         error ||
         newCatch.name == "" ||
@@ -52,7 +51,7 @@ const AddCatchModal = ({ setCatchLog }: Props) => {
       ) {
         throw new Error(error);
       }
-      setCatchLog((prevState) => [...prevState, data as FetchCatchLogs]);
+      refetch();
       toast({
         status: "success",
         title: "Congrats! 🎉",
