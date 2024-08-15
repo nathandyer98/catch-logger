@@ -78,7 +78,7 @@ const CatchLog = ({ log, setCatchLog, refetch }: Props) => {
               <Flex w="15%">
                 <Text fontWeight="bold">Angler: {log.name}</Text>
               </Flex>
-              <Flex w="10%">
+              <Flex w="12%">
                 <Text>Species: {log.species}</Text>
               </Flex>
               <Flex w="15%">

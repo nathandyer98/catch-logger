@@ -39,7 +39,7 @@ const Header = () => {
             }
             bgClip="text"
           >
-            My Catches
+            Catch Log
           </Text>
         </Text>
       </Flex>
