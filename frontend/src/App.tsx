@@ -5,7 +5,7 @@ import { useState } from "react";
 
 export interface CatchQuery {
   sortBy: string;
-  searchText?: string;
+  name: string;
 }
 
 function App() {
@@ -20,7 +20,11 @@ function App() {
             setCatchQuery({ ...catchQuery, sortBy })
           }
         />
-        <CatchesGrid catchQuery={catchQuery} />
+        <CatchesGrid
+          catchQuery={catchQuery}
+          name={catchQuery.name}
+          onFilterUser={(name) => setCatchQuery({ ...catchQuery, name })}
+        />
       </Container>
     </Stack>
   );

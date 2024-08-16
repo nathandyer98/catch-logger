@@ -6,12 +6,13 @@ from models import Catch, FishSpecies
 # Get All Catches Sorted by Date Caught by default
 @app.route("/api/catches", methods=["GET"])
 def get_catches():
-    # Get sorting parameters from the query string
+    # Get parameters from the query string
     sort_by = request.args.get("sortBy", "date")  # Default to sorting by 'date'
+    name_filter = request.args.get("name", None)  # Default to none
 
-    # Determine if the sort order should be descending based '-'
+    # Determining the sort type
     if sort_by.startswith("-"):
-        sort_by = sort_by[1:]  # Remove the '-'
+        sort_by = sort_by[1:]
         order = "desc"
     else:
         order = "asc"
@@ -37,8 +38,18 @@ def get_catches():
     else:
         sort_column = sort_column.asc()
 
-    # Query All in database and apply an order by the 'sort_column'
-    catches = Catch.query.order_by(sort_column).all()
+    # Start with the base query
+    query = Catch.query
+
+    # Apply the name filter if provided
+    if name_filter:
+        query = query.filter(Catch.name.ilike(f"%{name_filter}%"))
+
+    # Apply sorting
+    query = query.order_by(sort_column)
+
+    # Execute the query and fetch all results
+    catches = query.all()
 
     # Return the results as JSON
     return jsonify([catch.to_json() for catch in catches])

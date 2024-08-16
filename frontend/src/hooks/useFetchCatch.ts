@@ -25,7 +25,9 @@ const useFetchCatch = (catchQuery: CatchQuery) => {
     apiClient
       .get<FetchCatchLogs[]>('/catches', { 
         signal: controller.signal, 
-        params: { sortBy: catchQuery?.sortBy } 
+        params: { 
+          sortBy: catchQuery?.sortBy,
+          name: catchQuery?.name } 
       })
       .then(res => {
         setCatchLog(res.data)
