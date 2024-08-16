@@ -51,8 +51,6 @@ const CatchLog = ({ catchLog, setCatchLog, refetch }: Props) => {
         duration: 4000,
         isClosable: true,
       });
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -99,7 +97,6 @@ const CatchLog = ({ catchLog, setCatchLog, refetch }: Props) => {
                 catchLog={catchLog}
               />
               <IconButton
-                isLoading={isLoading}
                 variant="ghost"
                 colorScheme="red"
                 size="sm"

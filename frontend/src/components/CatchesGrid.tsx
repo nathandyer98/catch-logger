@@ -3,7 +3,7 @@ import CatchLog from "./CatchLog";
 import useFetchCatch, { FetchCatchLogs } from "../hooks/useFetchCatch";
 import { CatchQuery } from "../App";
 import AddCatchModal from "./AddCatchModal";
-import CatchesLogSkeletons from "./CatchesLogSkeletons";
+//import CatchesLogSkeletons from "./CatchesLogSkeletons";
 import FilterUser from "./FilterUser";
 
 interface Props {
@@ -13,9 +13,8 @@ interface Props {
 }
 
 const CatchesGrid = ({ catchQuery, onFilterUser, name }: Props) => {
-  const { catchLog, error, setCatchLog, isLoading, refetch } =
-    useFetchCatch(catchQuery);
-  const skeletons = [1, 2, 3];
+  const { catchLog, error, setCatchLog, refetch } = useFetchCatch(catchQuery);
+  //const skeletons = [1];
 
   if (error)
     return (
@@ -26,10 +25,10 @@ const CatchesGrid = ({ catchQuery, onFilterUser, name }: Props) => {
 
   return (
     <>
-      {isLoading &&
+      {/*isLoading &&
         skeletons.map((skeleton) => (
           <CatchesLogSkeletons key={skeleton}></CatchesLogSkeletons>
-        ))}
+        ))*/}
       <Box mb={2}>
         <FilterUser
           catchLog={catchLog}

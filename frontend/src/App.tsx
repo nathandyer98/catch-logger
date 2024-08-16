@@ -22,7 +22,7 @@ function App() {
         />
         <CatchesGrid
           catchQuery={catchQuery}
-          name={catchQuery.name}
+          name={catchQuery.name || ""}
           onFilterUser={(name) => setCatchQuery({ ...catchQuery, name })}
         />
       </Container>

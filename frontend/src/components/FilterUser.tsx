@@ -8,7 +8,7 @@ interface Props {
   catchLog: FetchCatchLogs[];
 }
 
-const FilterUser = ({ catchLog, onFilterUser, name }: Props) => {
+const FilterUser = ({ catchLog, onFilterUser, name = "" }: Props) => {
   const users = ["", ...new Set(catchLog.map((log) => log.name))];
 
   return (
