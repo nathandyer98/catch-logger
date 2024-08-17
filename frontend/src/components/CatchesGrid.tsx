@@ -45,7 +45,13 @@ const CatchesGrid = ({ catchQuery, onFilterUser, name }: Props) => {
           ))}
         </Accordion>
       </Grid>
-      <Box position="relative" right="-45%" mt={5}>
+      <Box
+        position="relative"
+        mt={5}
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+      >
         <AddCatchModal refetch={refetch} />
       </Box>
     </>

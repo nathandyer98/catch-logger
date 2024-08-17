@@ -72,29 +72,32 @@ const CatchLog = ({ catchLog, setCatchLog, refetch }: Props) => {
     >
       <CardHeader>
         <Flex flexDirection="column" justifyContent="space-between">
-          <Flex justifyContent="space-between" alignItems="center" mb={2}>
-            <Flex alignItems="center" gap={4} flex="1">
-              <Flex w="3%">
-                <Avatar src={catchLog.imgUrl} size="sm" />
-              </Flex>
-              <Flex w="15%">
-                <Text fontWeight="bold">Angler: {catchLog.name}</Text>
-              </Flex>
-              <Flex w="12%">
+          <Flex justifyContent="space-between" alignItems="flex-start" mb={2}>
+            <Flex flexDirection="column">
+              <Flex
+                flexDirection={{ base: "column", md: "row" }}
+                alignItems={{ base: "flex-start", md: "center" }}
+                gap={{ base: 2, md: 4 }}
+                mb={{ base: 2, md: 0 }}
+              >
+                <Flex alignItems="center" gap={2}>
+                  <Avatar src={catchLog.imgUrl} size="sm" />
+                  <Text fontWeight="bold">Angler: {catchLog.name}</Text>
+                </Flex>
                 <Text>Species: {catchLog.species}</Text>
-              </Flex>
-              <Flex w="15%">
                 <Badge colorScheme={getWeightColor(catchLog.weight)}>
                   {catchLog.weight} lbs
                 </Badge>
               </Flex>
             </Flex>
-            <Flex pr="20px">
-              <Text fontSize="sm" color="gray.500">
+            <Flex
+              flexDirection={{ base: "column-reverse", md: "row" }}
+              alignItems={{ base: "flex-end", md: "flex-start" }}
+              gap={2}
+            >
+              <Text fontSize="sm" color="gray.500" mt={1.5} mr={2}>
                 Date Caught: {new Date(catchLog.dateCaught).toLocaleString()}
               </Text>
-            </Flex>
-            <Flex alignItems="center" gap={2}>
               <EditModal
                 aria-label="Edit catch details"
                 setCatchLog={setCatchLog}
