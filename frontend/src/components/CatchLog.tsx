@@ -72,20 +72,23 @@ const CatchLog = ({ catchLog, setCatchLog, refetch }: Props) => {
     >
       <CardHeader>
         <Flex flexDirection="column" justifyContent="space-between">
-          <Flex justifyContent="space-between" alignItems="flex-start" mb={2}>
+          <Flex justifyContent="space-between" alignItems="flex-start">
             <Flex flexDirection="column">
               <Flex
                 flexDirection={{ base: "column", md: "row" }}
                 alignItems={{ base: "flex-start", md: "center" }}
                 gap={{ base: 2, md: 4 }}
-                mb={{ base: 2, md: 0 }}
+                justifyContent="space-between"
               >
                 <Flex alignItems="center" gap={2}>
                   <Avatar src={catchLog.imgUrl} size="sm" />
                   <Text fontWeight="bold">Angler: {catchLog.name}</Text>
                 </Flex>
                 <Text>Species: {catchLog.species}</Text>
-                <Badge colorScheme={getWeightColor(catchLog.weight)}>
+                <Badge
+                  mt={{ base: 3, md: 0 }}
+                  colorScheme={getWeightColor(catchLog.weight)}
+                >
                   {catchLog.weight} lbs
                 </Badge>
               </Flex>
