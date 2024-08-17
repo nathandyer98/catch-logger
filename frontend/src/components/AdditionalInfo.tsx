@@ -88,7 +88,7 @@ const AdditionalInfo = ({ catchLog, children }: Props) => {
           </AccordionPanel>
         ) : (
           <AccordionPanel pb={5} justifyContent="center">
-            No additional information
+            <Text fontStyle="oblique">No additional information</Text>
           </AccordionPanel>
         )}
       </AccordionItem>

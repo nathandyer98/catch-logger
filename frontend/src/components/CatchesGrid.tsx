@@ -31,6 +31,11 @@ const CatchesGrid = ({ catchQuery, onFilterUser, name }: Props) => {
           name={name}
         />
       </Box>
+      {catchLog.length === 0 && (
+        <Text fontSize={20} textAlign="center" mb={5}>
+          No catches yet 🙁
+        </Text>
+      )}
       <Grid templateColumns="1fr" gap={1}>
         <Accordion allowMultiple>
           {catchLog.map((catchLog: FetchCatchLogs) => (
