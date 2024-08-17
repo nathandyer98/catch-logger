@@ -63,11 +63,10 @@ const CatchLog = ({ catchLog, setCatchLog, refetch }: Props) => {
       key={catchLog.id}
       size="sm"
       my="3px"
-      transition="all 0.2s"
+      transition="all 0.3s"
       _hover={{
         boxShadow: "md",
-        transform: "translateY(-2px)",
-        cursor: "pointer",
+        transform: "translateY(-2px) ",
       }}
     >
       <CardHeader>
@@ -86,7 +85,7 @@ const CatchLog = ({ catchLog, setCatchLog, refetch }: Props) => {
                 </Flex>
                 <Text>Species: {catchLog.species}</Text>
                 <Badge
-                  mt={{ base: 3, md: 0 }}
+                  mt={{ base: 3, md: 0.5 }}
                   colorScheme={getWeightColor(catchLog.weight)}
                 >
                   {catchLog.weight} lbs
@@ -99,7 +98,8 @@ const CatchLog = ({ catchLog, setCatchLog, refetch }: Props) => {
               gap={2}
             >
               <Text fontSize="sm" color="gray.500" mt={1.5} mr={2}>
-                Date Caught: {new Date(catchLog.dateCaught).toLocaleString()}
+                Date / Time of Catch:{" "}
+                {new Date(catchLog.dateCaught).toLocaleString()}
               </Text>
               <EditModal
                 aria-label="Edit catch details"
