@@ -74,6 +74,11 @@ def create_catch():
         weight = data.get("weight")
         img_url = f"https://avatar.iran.liara.run/public/boy?username={name}"
         date_caught = data.get("date_caught")
+        rig_info = data.get("rig_info")
+        bait_info = data.get("bait_info")
+        distance = data.get("distance")
+        location = data.get("location")
+        comments = data.get("comments")
 
         # Validation for checking if input Species is within within the fish species ENUM
         if species not in [species.value for species in FishSpecies]:
@@ -93,6 +98,11 @@ def create_catch():
             weight=weight,
             img_url=img_url,
             date_caught=date_caught,
+            rig_info=rig_info,
+            bait_info=bait_info,
+            distance=distance,
+            location=location,
+            comments=comments,
         )
 
         # Staging and commiting the add to database
@@ -148,6 +158,12 @@ def update_catch(id):
         catch.name = data.get("name", catch.name)
         catch.species = data.get("species", catch.species)
         catch.weight = data.get("weight", catch.weight)
+        catch.date_caught = data.get("date_caught", catch.date_caught)
+        catch.rig_info = data.get("rig_info", catch.rig_info)
+        catch.bait_info = data.get("bait_info", catch.bait_info)
+        catch.distance = data.get("distance", catch.distance)
+        catch.location = data.get("location", catch.location)
+        catch.comments = data.get("comments", catch.comments)
 
         # Commiting change to database
         db.session.commit()

@@ -11,6 +11,11 @@ export interface FetchCatchLogs {
   weight: number;
   imgUrl: string;
   dateCaught: string;
+  rigInfo?: string;
+  baitInfo?: string;
+  distance?: string;
+  location?: string;
+  comments?: string;
 }
 
 const useFetchCatch = (catchQuery: CatchQuery) => {

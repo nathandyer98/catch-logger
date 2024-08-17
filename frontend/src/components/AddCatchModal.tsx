@@ -12,17 +12,16 @@ import {
   ModalHeader,
   ModalOverlay,
   Select,
+  Textarea,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { FishSpecies } from "../enum/FishSpecies";
-import { FetchCatchLogs } from "../hooks/useFetchCatch";
 import useCreateCatch, { CreateCatchLog } from "../hooks/useCreateCatch";
 import { FaFishFins } from "react-icons/fa6";
 
 interface Props {
-  setCatchLog: React.Dispatch<React.SetStateAction<FetchCatchLogs[]>>;
   refetch: () => void;
 }
 
@@ -31,12 +30,18 @@ const DefaultCatch = {
   species: "" as FishSpecies,
   weight: Number(),
   date_caught: new Date().toISOString().slice(0, 16),
+  rig_info: undefined,
+  bait_info: undefined,
+  distance: undefined,
+  location: undefined,
+  comments: undefined,
 };
 
-const AddCatchModal = ({ setCatchLog, refetch }: Props) => {
+const AddCatchModal = ({ refetch }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLoading, setIsLoading] = useState(false);
   const [newCatch, setNewCatch] = useState<CreateCatchLog>(DefaultCatch);
+  const [moreInfo, setMoreInfo] = useState(false);
 
   const { createCatch, error } = useCreateCatch();
   const toast = useToast();
@@ -44,7 +49,7 @@ const AddCatchModal = ({ setCatchLog, refetch }: Props) => {
   const handleSubmit = async () => {
     setIsLoading(true);
     try {
-      const data = await createCatch(newCatch);
+      await createCatch(newCatch);
       if (
         newCatch.name == "" ||
         newCatch.species == ("" as FishSpecies) ||
@@ -53,7 +58,6 @@ const AddCatchModal = ({ setCatchLog, refetch }: Props) => {
         throw new Error(error);
       }
       refetch();
-      setCatchLog((prevState) => [...prevState, data as FetchCatchLogs]);
       toast({
         status: "success",
         title: "Congrats! 🎉",
@@ -72,6 +76,7 @@ const AddCatchModal = ({ setCatchLog, refetch }: Props) => {
     } finally {
       setIsLoading(false);
       setNewCatch(DefaultCatch);
+      setMoreInfo(false);
     }
   };
 
@@ -92,7 +97,7 @@ const AddCatchModal = ({ setCatchLog, refetch }: Props) => {
         <Icon as={FaFishFins} boxSize={6} mr={2} />
         Add Catch
       </Button>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} scrollBehavior={"outside"}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader> Add a new Catch </ModalHeader>
@@ -166,9 +171,75 @@ const AddCatchModal = ({ setCatchLog, refetch }: Props) => {
                   }}
                 />
               </FormControl>
+              {moreInfo && (
+                <>
+                  <FormControl mt={4}>
+                    <FormLabel>Rig</FormLabel>
+                    <Input
+                      placeholder='6" Spinner Rig'
+                      value={newCatch.rig_info}
+                      onChange={(e) =>
+                        setNewCatch({ ...newCatch, rig_info: e.target.value })
+                      }
+                    />
+                  </FormControl>
+                  <FormControl mt={4}>
+                    <FormLabel>Bait</FormLabel>
+                    <Input
+                      placeholder="DNA Bug Dumbell Wafters 14x18mm"
+                      value={newCatch.bait_info}
+                      onChange={(e) =>
+                        setNewCatch({ ...newCatch, bait_info: e.target.value })
+                      }
+                    />
+                  </FormControl>
+                  <FormControl mt={4}>
+                    <FormLabel>Distance</FormLabel>
+                    <Input
+                      placeholder="15 Wraps"
+                      value={newCatch.distance}
+                      onChange={(e) =>
+                        setNewCatch({ ...newCatch, distance: e.target.value })
+                      }
+                    />
+                  </FormControl>
+                  <FormControl mt={4}>
+                    <FormLabel>Location</FormLabel>
+                    <Input
+                      placeholder="Close Left-side margin under the willow"
+                      value={newCatch.location}
+                      onChange={(e) =>
+                        setNewCatch({ ...newCatch, location: e.target.value })
+                      }
+                    />
+                  </FormControl>
+                  <FormControl mt={4}>
+                    <FormLabel>Additional Comments</FormLabel>
+                    <Textarea
+                      overflow="hidden"
+                      resize="none"
+                      placeholder="Fished over a bed of baits and used 2 spombs every 2 hours..."
+                      value={newCatch.comments}
+                      onChange={(e) =>
+                        setNewCatch({ ...newCatch, comments: e.target.value })
+                      }
+                    />
+                  </FormControl>
+                </>
+              )}
             </ModalBody>
           </ModalBody>
           <ModalFooter>
+            <Button
+              colorScheme="gray"
+              variant="outline"
+              mr={3}
+              onClick={() => {
+                setMoreInfo(!moreInfo);
+              }}
+            >
+              {!moreInfo ? "More info" : "Collapse"}
+            </Button>
             <Button
               colorScheme="blue"
               mr={3}
@@ -182,6 +253,7 @@ const AddCatchModal = ({ setCatchLog, refetch }: Props) => {
               onClick={() => {
                 onClose();
                 setNewCatch(DefaultCatch);
+                setMoreInfo(false);
               }}
             >
               Cancel

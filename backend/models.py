@@ -21,6 +21,11 @@ class Catch(db.Model):
     weight = db.Column(db.Integer, nullable=False)
     img_url = db.Column(db.String(200), nullable=True)
     date_caught = db.Column(db.String(16), nullable=False)
+    rig_info = db.Column(db.String(20), nullable=True)
+    bait_info = db.Column(db.String(20), nullable=True)
+    distance = db.Column(db.String(20), nullable=True)
+    location = db.Column(db.String(20), nullable=True)
+    comments = db.Column(db.String(100), nullable=True)
 
     def to_json(self):
         return {
@@ -30,4 +35,9 @@ class Catch(db.Model):
             "weight": self.weight,
             "imgUrl": self.img_url,
             "dateCaught": self.date_caught,
+            "rigInfo": self.rig_info,
+            "baitInfo": self.bait_info,
+            "distance": self.distance,
+            "location": self.location,
+            "comments": self.comments,
         }

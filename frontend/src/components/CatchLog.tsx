@@ -5,6 +5,7 @@ import {
   CardHeader,
   Flex,
   IconButton,
+  Spinner,
   Text,
   useToast,
 } from "@chakra-ui/react";
@@ -54,8 +55,11 @@ const CatchLog = ({ catchLog, setCatchLog, refetch }: Props) => {
     }
   };
 
+  if (isLoading) return <Spinner size="xl" />;
+
   return (
     <Card
+      width="100%"
       key={catchLog.id}
       size="sm"
       my="3px"
@@ -95,6 +99,7 @@ const CatchLog = ({ catchLog, setCatchLog, refetch }: Props) => {
                 aria-label="Edit catch details"
                 setCatchLog={setCatchLog}
                 catchLog={catchLog}
+                refetch={refetch}
               />
               <IconButton
                 variant="ghost"
