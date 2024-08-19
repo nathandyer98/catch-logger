@@ -11,6 +11,7 @@ const SortSelector = ({ onSelectSortOrder, sortBy }: Props) => {
     { value: "date", label: "Date Caught" },
     { value: "name", label: "Name" },
     { value: "-weight", label: "Weight" },
+    { value: "species", label: "Species" },
   ];
 
   const currentSortOrder = sortOrders.find((order) => order.value === sortBy);

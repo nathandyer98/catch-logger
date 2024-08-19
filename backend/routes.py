@@ -7,8 +7,8 @@ from models import Catch, FishSpecies
 @app.route("/api/catches", methods=["GET"])
 def get_catches():
     # Get parameters from the query string
-    sort_by = request.args.get("sortBy", "date")  # Default to sorting by 'date'
-    name_filter = request.args.get("name", None)  # Default to none
+    sort_by = request.args.get("sortBy", "date") 
+    name_filter = request.args.get("name", None) 
 
     # Determining the sort type
     if sort_by.startswith("-"):
@@ -17,7 +17,7 @@ def get_catches():
     else:
         order = "asc"
 
-    # Mapping of the sorting fields based on the model
+    # Sort field options
     sort_options = {
         "name": Catch.name,
         "species": Catch.species,
@@ -109,10 +109,9 @@ def create_catch():
         db.session.add(new_catch)
         db.session.commit()
 
-        # Return the new Catch object as a JSON to the Frontend
+        
         return jsonify(new_catch.to_json()), 201
 
-    # Error handling, return session the previous state and output error as JSON, 500
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
@@ -132,10 +131,9 @@ def delete_catch(id):
         db.session.delete(catch)
         db.session.commit()
 
-        # Returning Catch deleted msg, 200
         return jsonify({"msg": "Catch deleted"}), 200
 
-    # Error handling, return session the previous state and output error as JSON, 500
+ 
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
@@ -169,7 +167,7 @@ def update_catch(id):
         db.session.commit()
         return jsonify(catch.to_json()), 200
 
-    # Error handling, return session the previous state and output error as JSON, 500
+   
     except Exception as e:
         db.session.rollback()
         return jsonify({"error": str(e)}), 500

@@ -3,14 +3,17 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 import os
 
+# Setting up flask & configs
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///fishlogs.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-CORS(app)
+CORS(app) 
 
-db = SQLAlchemy(app)
+db = SQLAlchemy(app) # Initialise the db
 
+
+# Setting for deployment up for front end
 frontend_folder = os.path.join(os.getcwd(),"..","frontend")
 dist_folder = os.path.join(frontend_folder,"dist")
 
@@ -22,6 +25,7 @@ def index(filename):
   return send_from_directory(dist_folder,filename)
 
 import routes
+
 
 with app.app_context():
   db.create_all()
